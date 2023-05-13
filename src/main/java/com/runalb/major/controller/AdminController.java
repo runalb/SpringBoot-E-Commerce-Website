@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @Controller
 public class AdminController {
 
@@ -36,4 +38,24 @@ public class AdminController {
         categoryService.addCategory(category);
         return "redirect:/admin/categories";
     }
+
+
+    @GetMapping("/admin/categories/delete/{id}")
+    public String deleteCategories(@PathVariable int id){
+        categoryService.removeCategoryById(id);
+        return "redirect:/admin/categories";
+    }
+
+
+    @GetMapping("/admin/categories/update/{id}")
+    public String updateCategories(@PathVariable int id, Model model){
+        Optional<Category> category = categoryService.getCategoryById(id);
+        if (category.isPresent()){
+            model.addAttribute("category", category.get());
+            return "categoriesAdd";
+        } else {
+            return "404";
+        }
+    }
+
 }
