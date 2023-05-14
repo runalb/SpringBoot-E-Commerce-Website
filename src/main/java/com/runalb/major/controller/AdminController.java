@@ -1,7 +1,9 @@
 package com.runalb.major.controller;
 
+import com.runalb.major.dto.ProductDTO;
 import com.runalb.major.model.Category;
 import com.runalb.major.service.CategoryService;
+import com.runalb.major.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,10 +17,16 @@ public class AdminController {
     @Autowired
     CategoryService categoryService;
 
+    @Autowired
+    ProductService productService;
+
     @GetMapping("/admin")
     public String adminPage(){
         return "adminHome";
     }
+
+
+    // Categories Section
 
     @GetMapping("/admin/categories")
     public String getCategoriesPage(Model model){
@@ -56,6 +64,23 @@ public class AdminController {
         } else {
             return "404";
         }
+    }
+
+
+    // Product Section
+
+    @GetMapping("/admin/products")
+    public String getProductsPage(Model model){
+        model.addAttribute("products", productService.getAllProduct());
+        return "products";
+    }
+
+
+    @GetMapping("/admin/products/add")
+    public String getAddProductPage(Model model){
+        model.addAttribute("productDTO", new ProductDTO());
+        model.addAttribute("categories", categoryService.getAllCategory());
+        return "productsAdd";
     }
 
 }
