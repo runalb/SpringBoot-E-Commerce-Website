@@ -1,5 +1,6 @@
 package com.runalb.major.controller;
 
+import com.runalb.major.global.GlobalData;
 import com.runalb.major.model.Role;
 import com.runalb.major.model.User;
 import com.runalb.major.repository.RoleRepository;
@@ -29,6 +30,7 @@ public class LoginController {
 
     @GetMapping("/login")
     public String getLoginPage(){
+        GlobalData.cart.clear();
         return "login";
     }
 
